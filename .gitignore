@@ -1,3 +1,6 @@
+# Temporary matlab files
+*.asv
+
 # Prerequisites
 *.d
 
