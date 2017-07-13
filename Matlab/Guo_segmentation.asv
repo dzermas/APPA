@@ -1,0 +1,61 @@
+%% Dimitris Zermas 4/3/2017
+% Implementation of the paper: Guo W Rage U Ninomiya S, "Illumination 
+% invariant segmentation of vegetation for time series wheat images based 
+% on decision tree model", Computers and Electronics in Agriculture, 2013
+
+% This code trains a tree for the classification of green pixels
+
+clearvars;
+close all;
+clc;
+
+addpath('common')
+warning('off','all');
+
+% Select folder with Images
+folder_name = uigetdir('','Select folder with the images to be processed');
+list = dir(strcat(folder_name,'/*.JPG'));
+
+% 'train' or 'test'?
+mode = 'train';
+
+% Number of image splits
+winx = 1;
+winy = 1;
+
+clc
+for nim = 1:length(list)
+    disp(strcat('start processing image :',list(nim).name));
+    % Load data from workspace
+    im_whole = imread(strcat(folder_name,'/',list(nim).name));
+    im_ = imresize(im_whole, 0.5);
+    clear im_whole im_orig;
+    
+    x_ = [1:round(size(im_,2)/winx):size(im_,2) size(im_,2)];
+    y_ = [1:round(size(im_,1)/winy):size(im_,1) size(im_,1)];
+    for i_ = 1:winx
+        for j_ = 1:winy
+            % Subimage
+            im = imcrop(im_, [x_(i_) y_(j_) x_(i_+1)-x_(i_) y_(j_+1)-y_(j_)]);
+            
+            % Train random forest
+            if (strcmp(mode, 'train'))
+                [training_set, label_set] = extractTrainingPixels(im);
+                colorSpace = colorExtraction(training_set);
+                RGB = colorSpace.RGB;
+                YCbCr = colorSpace.YCbCr;
+                HSL = colorSpace.HSL;
+                HSV = colorSpace.HSV;
+                Lab = colorSpace.Lab;
+                Luv = colorSpace.Luv;
+                Tbl = [RGB,YCbCr,HSL,HSV,Lab,Luv];
+                tree = fitctree(Tbl,label_set);
+            elseif (strcmp(mode, 'test'))
+                % Test random forest
+                green_im = segmentGreenGUO(tree, im);
+            else
+                disp('Set correct )
+            
+        end
+    end
+end
