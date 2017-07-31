@@ -3,16 +3,21 @@ Autonomous Plant Pathology Assessment (APPA) is a software toolbox that processe
 
 # Files
 (root)
+
 |- data: images to test the algorithm
+
 |--- mat_files: .mat files for classification models needed by the main scripts
+
 |- Matlab: Matlab implementation of the algorithm
+
 |--- 3rdParty: colorspace is a tool to compute different colorspaces
+
 |--- common: all functions used by the main scripts
+
 |--- deficiency_detection.m: main script for the detection of Rectangles of Interest (ROI) inside the provided images
+
 |--- Guo_segmentation.m: main script for the green pixels segmentation as described in {Guo W Rage U Ninomiya S, "Illumination 
-invariant segmentation of vegetation for time series wheat images based 
-on decision tree model", Computers and Electronics in Agriculture, 2013
-}
+invariant segmentation of vegetation for time series wheat images based on decision tree model", Computers and Electronics in Agriculture, 2013}
 
 # How to Run
 ## deficiency_detection.m
