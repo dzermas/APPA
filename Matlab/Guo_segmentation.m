@@ -40,7 +40,7 @@ for nim = 1:length(list)
             % Train random forest
             if (strcmp(mode, 'train'))
                 tree = trainGreenSegmentationGUO(im);
-                save('tree_model.mat', 'tree');
+                save('../data/mat_files/tree_model.mat', 'tree');
             elseif (strcmp(mode, 'test'))
                 % Test random forest
                 load('tree_model.mat');
