@@ -19,12 +19,12 @@ decorrParam = 0.01;
 % Already got an SVM model for green/rest separation?
 got_svm_green_model = true;
 % Already got an SVM model for yellow/soil separation?
-got_svm_yellow_model = true;
+got_svm_model = true;
 % Select how many subimages you want the initial image to be split into
 winx = 4;
 winy = 2;
 % Just collect data or groundtruth them?
-groundtruth = true;
+groundtruth = 1;
 
 % Select folder with Images
 folder_name_input = uigetdir('','Select folder with the images to be processed');
@@ -59,7 +59,7 @@ else
 end
 
 % Load SVM model for the separation of yellow pixels
-if got_svm_yellow_model
+if got_svm_model
     load('../data/mat_files/svmstruct_yellow.mat');
 else
     [file_names, files_path] = uigetfile('*','Select file to train','Multiselect','on');
@@ -162,7 +162,7 @@ for nim = 1:length(list)
                 [c,H] = contour(mask,[0.5 0.5],'c');
                 set (H, 'LineWidth', 2);
                                 
-                if groundtruth
+                if groundtruth == 1
                     prompt = 'Class? 1 for Deficient/0 for Other: ';
                     class = input(prompt,'s'); % 1 Deficient/0 Other
                     % Save selected iamges to disk
